@@ -1,132 +1,155 @@
 # ⛓️ Tied Together
 
-A real-time multiplayer web-based game where players are physically connected by chains and must cooperate to navigate obstacles and complete levels together!
+![banner](public/assets/banner.png)
 
-## 🎮 Game Features
+A real-time multiplayer 2D platformer where two players are connected by a chain and must cooperate to jump through an infinite jungle filled with spike traps and bottomless pits!
 
-- **Real-time Multiplayer**: Play with up to 4 players simultaneously using WebSocket technology
-- **Physics-Based Chains**: Players are connected by dynamic chains with realistic physics
-- **Cooperative Gameplay**: Coordinate movements to avoid stretching the chain and navigate obstacles
-- **Progressive Levels**: Increasingly challenging platformer levels
-- **Beautiful UI**: Modern, responsive design with smooth animations
-- **Cross-Platform**: Play on any device with a modern web browser
+## 📋 Prerequisites
 
-## 🚀 Quick Start
+Before you begin, ensure you have the following installed:
 
-### Prerequisites
+- **Node.js** (v14 or higher) - [Download here](https://nodejs.org/)
+- **npm** (comes with Node.js)
 
-- Node.js (v14 or higher)
-- npm (comes with Node.js)
+To verify your installation:
+```bash
+node --version
+npm --version
+```
 
-### Installation
+## 🚀 Setup Instructions
 
-1. Clone the repository:
+### Step 1: Clone the Repository
+
 ```bash
 git clone <repository-url>
 cd tied_together
 ```
 
-2. Install dependencies:
+Or if you already have the files, just navigate to the project directory:
+```bash
+cd tied_together
+```
+
+### Step 2: Install Dependencies
+
+Install all required packages:
+
 ```bash
 npm install
 ```
 
-3. Start the server:
-```bash
-npm start
-```
+This will install:
+- `express` - Web server framework
+- `socket.io` - Real-time multiplayer communication
+- `nodemon` (dev dependency) - Auto-restart during development
 
-4. Open your browser and navigate to:
-```
-http://localhost:3000
-```
+### Step 3: Start the Server
 
-### Development Mode
+#### Development Mode (Recommended for testing)
 
-For development with auto-restart on file changes:
+For development with automatic server restart on file changes:
+
 ```bash
 npm run dev
 ```
 
-## 🎯 How to Play
+#### Production Mode
 
-### Controls
+For a standard server run:
 
-- **Move Left**: Arrow Left or A
-- **Move Right**: Arrow Right or D
-- **Jump**: Arrow Up, W, or Spacebar
-
-### Objective
-
-1. Work together with other players to navigate through the level
-2. Stay connected - don't stretch the chain too far!
-3. Avoid falling off platforms
-4. Reach the goal area (golden flag on the right side)
-5. Complete all levels as a team
-
-### Game Mechanics
-
-- **Chain Physics**: Players are connected by chains that can stretch but have a maximum length
-- **Cooperative Movement**: If one player moves too far, they'll pull others along
-- **Platforming**: Jump across platforms and obstacles
-- **Level Progression**: Only advance when ALL players reach the goal
-
-## 🏗️ Project Structure
-
-```
-tied_together/
-├── server.js           # Node.js server with Socket.io for multiplayer
-├── package.json        # Project dependencies and scripts
-├── README.md          # This file
-└── public/            # Client-side files
-    ├── index.html     # Main HTML structure
-    ├── style.css      # Beautiful styling and animations
-    └── game.js        # Game engine, physics, and rendering
+```bash
+npm start
 ```
 
-## 🛠️ Technology Stack
+The server will start on **port 3000** by default.
 
-### Backend
-- **Node.js**: JavaScript runtime
-- **Express**: Web server framework
-- **Socket.io**: Real-time bidirectional communication
+### Step 4: Open in Browser
 
-### Frontend
-- **HTML5 Canvas**: Game rendering
-- **Vanilla JavaScript**: Game logic and physics
-- **CSS3**: Modern styling with gradients and animations
-- **Socket.io Client**: Real-time multiplayer synchronization
+Once the server is running, open your web browser and navigate to:
 
-## 🎨 Features in Detail
+```
+http://localhost:3000
+```
 
-### Multiplayer System
-- Room-based matchmaking
-- Custom room IDs for playing with friends
-- Automatic player synchronization
-- Handles disconnections gracefully
+You should see the game menu screen.
 
-### Physics Engine
-- Gravity and collision detection
-- Chain constraint system with dynamic tension
-- Smooth player movement
-- Platform interactions
+## 🎮 How to Play
 
-### Visual Design
-- Gradient backgrounds
-- Animated player characters with faces
-- Dynamic chain rendering with tension indicators
-- Goal area highlighting
-- Responsive HUD
+### Creating a Room
+
+1. Click **"Create Room"** on the main menu
+2. A room code will be generated (e.g., "ABC123")
+3. Share the room code or link with your friend
+4. Choose your character (Duck 🦆 or Dog 🐕)
+5. Wait for your friend to join and select their character
+6. Once both players have selected characters, click **"Start Game"** (only the room creator can start)
+
+### Joining a Room
+
+1. Enter the 6-character room code in the input field
+2. Click **"Join Room"**
+3. Choose your character (Duck 🦆 or Dog 🐕)
+4. Wait for the host to start the game
+
+### Gameplay Controls
+
+- **Move**: Arrow Keys or WASD
+- **Jump**: Spacebar, W, or Arrow Up
+- **Restart**: Click the "RESTART" button (appears in top-right during game)
+
+### Game Objective
+
+- Jump as far as you can together!
+- Stay connected - don't stretch the chain too far
+- Avoid spike traps (instant death for anyone)
+- Avoid falling into the abyss together (if both fall, game over)
+- One player can save the other from falling
+
+## 🌐 Playing on Local Network
+
+To play with friends on the same network:
+
+1. Find your local IP address:
+   - **Windows**: Run `ipconfig` in Command Prompt
+   - **Mac/Linux**: Run `ifconfig` in Terminal
+   - Look for IPv4 address (usually starts with 192.168.x.x)
+
+2. Start the server as usual
+
+3. Have your friend navigate to:
+   ```
+   http://YOUR_LOCAL_IP:3000
+   ```
+   Replace `YOUR_LOCAL_IP` with your actual IP address
+
+4. Make sure your firewall allows connections on port 3000
 
 ## 🔧 Configuration
 
-You can modify game parameters in `public/game.js`:
+### Changing the Server Port
+
+If port 3000 is already in use, you can change it by modifying `server.js`:
+
+```javascript
+const PORT = process.env.PORT || 3000; // Change 3000 to your desired port
+```
+
+Or set an environment variable:
+```bash
+PORT=4000 npm start
+```
+
+### Game Settings
+
+Game parameters can be adjusted in `public/game.js`:
 
 ```javascript
 const CONFIG = {
     CANVAS_WIDTH: 1200,
     CANVAS_HEIGHT: 600,
-    PLAYER_SIZE: 20,
+    PLAYER_WIDTH: 60,
+    PLAYER_HEIGHT: 75,
     PLAYER_SPEED: 5,
     JUMP_FORCE: 12,
     GRAVITY: 0.5,
@@ -136,56 +159,87 @@ const CONFIG = {
 };
 ```
 
-## 🌐 Deployment
-
-### Local Network
-To play on your local network, find your local IP address and use:
-```
-http://YOUR_LOCAL_IP:3000
-```
-
-### Cloud Deployment
-The game can be deployed to any Node.js hosting service:
-- Heroku
-- DigitalOcean
-- AWS
-- Google Cloud
-- Vercel (with serverless functions)
-
-Make sure to set the `PORT` environment variable if required by your hosting provider.
-
 ## 🐛 Troubleshooting
 
-**Players not connecting?**
-- Check that the server is running on port 3000
-- Ensure firewall allows connections
-- Verify all players use the same room ID
+### Server Won't Start
 
-**Game lagging?**
-- Reduce number of simultaneous players
-- Check network connection
-- Lower the update rate in the code if needed
+**Error: Port 3000 is already in use**
+- Solution: Kill the process using port 3000 or change the port (see Configuration above)
+- On Windows: `netstat -ano | findstr :3000` then `taskkill /F /PID <PID>`
+- On Mac/Linux: `lsof -ti:3000 | xargs kill`
 
-**Chain acting weird?**
-- Adjust `MAX_CHAIN_LENGTH` and `CHAIN_STIFFNESS` in CONFIG
-- Ensure all players have stable connections
+### Players Can't Connect
 
-## 🤝 Contributing
+- ✅ Ensure the server is running (`npm start` or `npm run dev`)
+- ✅ Check that both players are using the same URL/port
+- ✅ Verify the room code is entered correctly (case-sensitive, 6 characters)
+- ✅ Check firewall settings - port 3000 must be accessible
+- ✅ For local network play, ensure both devices are on the same Wi-Fi network
 
-Contributions are welcome! Some ideas for improvements:
-- Add more level designs
-- Implement power-ups
-- Add sound effects and music
-- Create different game modes
-- Add leaderboards
-- Implement mobile touch controls
+### Game Not Loading
+
+- ✅ Open browser console (F12) to check for errors
+- ✅ Ensure all assets are in `public/assets/` folder:
+  - `backdrop.png`
+  - `duck.png`
+  - `dog.png`
+- ✅ Clear browser cache and refresh
+
+### Character Images Not Showing
+
+- ✅ Verify image files exist in `public/assets/`
+- ✅ Check browser console for 404 errors
+- ✅ Ensure file names match exactly (case-sensitive)
+
+## 📁 Project Structure
+
+```
+tied_together/
+├── server.js              # Node.js server with Socket.io
+├── package.json           # Dependencies and scripts
+├── README.md             # This file
+└── public/               # Client-side files
+    ├── index.html        # Main HTML structure
+    ├── style.css         # Styling (minimalistic pixelated theme)
+    ├── game.js           # Game engine, physics, and rendering
+    └── assets/           # Game assets
+        ├── backdrop.png  # Background image
+        ├── duck.png      # Duck character sprite
+        └── dog.png       # Dog character sprite
+```
+
+## 🛠️ Technology Stack
+
+- **Backend**: Node.js, Express, Socket.io
+- **Frontend**: HTML5 Canvas, Vanilla JavaScript, CSS3
+- **Real-time**: WebSocket communication via Socket.io
+
+## 🚢 Deployment
+
+### Local Development
+The game runs locally with `npm run dev` or `npm start`.
+
+### Production Deployment
+
+For deploying to a hosting service (Heroku, DigitalOcean, AWS, etc.):
+
+1. Set the `PORT` environment variable (most hosts do this automatically)
+2. Ensure your hosting service supports Node.js
+3. Push your code to the hosting service
+4. Make sure `node_modules` is in `.gitignore` (it should be)
+5. The hosting service should run `npm install` and then `npm start`
+
+Example for Heroku:
+```bash
+heroku create tied-together-game
+git push heroku main
+heroku open
+```
 
 ## 📝 License
 
-This project is licensed under the MIT License.
+MIT License - feel free to use and modify!
 
-## 🎉 Credits
+## 🎉 Enjoy!
 
-Created as a cooperative multiplayer platformer inspired by games like "Chained Together" and "Tied Together".
-
-Enjoy playing with your friends! 🎮⛓️
+Have fun playing Tied Together with your friends! Jump as far as you can! 🎮⛓️
