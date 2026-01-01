@@ -219,22 +219,119 @@ tied_together/
 ### Local Development
 The game runs locally with `npm run dev` or `npm start`.
 
-### Production Deployment
+### Deploying to Render
 
-For deploying to a hosting service (Heroku, DigitalOcean, AWS, etc.):
+[Render](https://render.com) is a great free hosting option for Node.js applications. Here's how to deploy:
 
-1. Set the `PORT` environment variable (most hosts do this automatically)
-2. Ensure your hosting service supports Node.js
-3. Push your code to the hosting service
-4. Make sure `node_modules` is in `.gitignore` (it should be)
-5. The hosting service should run `npm install` and then `npm start`
+#### Prerequisites
+1. A GitHub account
+2. Your code pushed to a GitHub repository
+3. A Render account (sign up at [render.com](https://render.com))
 
-Example for Heroku:
+#### Step-by-Step Deployment
+
+**Step 1: Push to GitHub**
+```bash
+git init
+git add .
+git commit -m "Initial commit"
+git remote add origin https://github.com/YOUR_USERNAME/tied_together.git
+git push -u origin main
+```
+
+**Step 2: Create a New Web Service on Render**
+
+1. Log in to [Render Dashboard](https://dashboard.render.com)
+2. Click **"New +"** → **"Web Service"**
+3. Connect your GitHub account if not already connected
+4. Select your `tied_together` repository
+
+**Step 3: Configure the Service**
+
+Fill in the following settings:
+
+- **Name**: `tied-together` (or any name you prefer)
+- **Environment**: `Node`
+- **Region**: Choose closest to you
+- **Branch**: `main` (or `master` if that's your default branch)
+- **Root Directory**: Leave empty (or `.` if you want to be explicit)
+- **Build Command**: `npm install`
+- **Start Command**: `npm start`
+- **Instance Type**: 
+  - **Free tier**: Choose "Free" (has limitations but works for testing)
+  - **Paid tier**: Choose "Starter" or higher for better performance
+
+**Step 4: Advanced Settings (Optional)**
+
+Click "Advanced" to configure:
+
+- **Auto-Deploy**: `Yes` (automatically deploys on git push)
+- **Health Check Path**: Leave empty or set to `/`
+- **Environment Variables**: Not needed (PORT is set automatically)
+
+**Step 5: Deploy**
+
+1. Click **"Create Web Service"**
+2. Render will automatically:
+   - Clone your repository
+   - Run `npm install`
+   - Start the server with `npm start`
+3. Wait for the build to complete (usually 2-5 minutes)
+4. Your app will be live at: `https://tied-together.onrender.com` (or your custom name)
+
+**Step 6: Access Your Game**
+
+Once deployed, you'll get a URL like:
+```
+https://tied-together.onrender.com
+```
+
+Share this URL with friends to play together!
+
+#### Important Notes for Render
+
+- **Free Tier Limitations**:
+  - Services spin down after 15 minutes of inactivity
+  - First request after spin-down takes ~30 seconds to wake up
+  - For production use, consider the paid tier ($7/month)
+
+- **WebSocket Support**: 
+  - Render fully supports WebSocket connections (Socket.io works perfectly)
+  - No additional configuration needed
+
+- **Environment Variables**:
+  - `PORT` is automatically set by Render (don't override it)
+  - Your `server.js` already uses `process.env.PORT || 3000` ✅
+
+- **Auto-Deploy**:
+  - Every push to your main branch will trigger a new deployment
+  - You can disable this in the service settings if needed
+
+#### Updating Your Deployment
+
+After making changes:
+```bash
+git add .
+git commit -m "Your changes"
+git push origin main
+```
+
+Render will automatically detect the push and redeploy your service.
+
+### Other Deployment Options
+
+**Heroku**:
 ```bash
 heroku create tied-together-game
 git push heroku main
 heroku open
 ```
+
+**DigitalOcean App Platform**:
+- Similar to Render, connect GitHub repo and configure Node.js service
+
+**AWS/Google Cloud**:
+- Requires more setup but offers more control and scalability
 
 ## 📝 License
 
