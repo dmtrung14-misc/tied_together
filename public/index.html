@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tied Together - 2 Player Co-op</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Main Menu Screen -->
+    <div id="menu-screen" class="screen active">
+        <div class="menu-container">
+            <h1 class="game-title">⛓️ Tied Together</h1>
+            <p class="game-subtitle">Jump through the deadly jungle as one!</p>
+            
+            <div class="menu-content">
+                <button id="create-room-btn" class="primary-btn">Create Room</button>
+                
+                <div class="divider"><span>OR</span></div>
+                
+                <input type="text" id="room-code-input" placeholder="Enter Room Code" maxlength="6">
+                <button id="join-room-btn" class="secondary-btn">Join Room</button>
+                
+                <button id="how-to-play-btn" class="secondary-btn">How to Play</button>
+            </div>
+            
+            <!-- How to Play Modal -->
+            <div id="how-to-play-modal" class="modal">
+                <div class="modal-content">
+                    <h2>HOW TO PLAY</h2>
+                    <ul>
+                        <li>🎮 <strong>Move:</strong> Arrow Keys or WASD</li>
+                        <li>🦘 <strong>Jump:</strong> Spacebar, W, or Arrow Up</li>
+                        <li>⛓️ Stay connected to your partner via chain</li>
+                        <li>⚠️ Avoid spike traps and bottomless pits!</li>
+                        <li>🤝 You can save each other from falling</li>
+                        <li>💀 If anyone hits spikes = Game Over!</li>
+                        <li>🏃 Jump as far as you can together!</li>
+                    </ul>
+                    <button id="close-modal-btn" class="primary-btn">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Waiting Room / Character Selection Screen -->
+    <div id="waiting-screen" class="screen">
+        <div class="waiting-container">
+            <h2>Room Created!</h2>
+            <div class="room-info-display">
+                <span class="label">Room Code:</span>
+                <span id="room-code" class="code"></span>
+                <div class="room-actions">
+                    <button id="copy-code-btn" class="copy-btn">📋 Copy Code</button>
+                    <button id="copy-link-btn" class="copy-btn">🔗 Copy Link</button>
+                </div>
+                <input type="text" id="room-link" readonly class="room-link-input">
+            </div>
+            
+            <div class="character-selection">
+                <h3>Choose Your Character</h3>
+                <div class="character-grid">
+                    <div class="character-option" data-character="duck">
+                        <div class="character-preview duck-preview">🦆</div>
+                        <span>Duck</span>
+                    </div>
+                    <div class="character-option" data-character="dog">
+                        <div class="character-preview dog-preview">🐕</div>
+                        <span>Dog</span>
+                    </div>
+                </div>
+            </div>
+
+            <div id="players-waiting">
+                <h3>Players</h3>
+                <div id="waiting-player-list" class="waiting-player-list"></div>
+            </div>
+
+            <button id="start-game-btn" class="primary-btn" disabled>Start Game</button>
+            <p class="waiting-message">Waiting for both players to select characters...</p>
+        </div>
+    </div>
+
+    <!-- Game Screen -->
+    <div id="game-screen" class="screen">
+        <canvas id="game-canvas"></canvas>
+        <div id="game-message" class="game-message"></div>
+        <button id="restart-btn" class="restart-btn">RESTART</button>
+        
+        <!-- Game Over Card -->
+        <div id="game-over-card" class="game-over-card">
+            <h2 class="game-over-title">GAME OVER</h2>
+            <div class="score-display">
+                <div class="score-item">
+                    <span class="score-label">SCORE</span>
+                    <span id="final-score" class="score-value">0</span>
+                </div>
+                <div class="score-item">
+                    <span class="score-label">BEST</span>
+                    <span id="high-score" class="score-value">0</span>
+                </div>
+            </div>
+            <button id="restart-game-btn" class="minimal-btn">RESTART</button>
+        </div>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="game.js"></script>
+</body>
+</html>

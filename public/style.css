@@ -1,0 +1,767 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    image-rendering: pixelated;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: crisp-edges;
+}
+
+body {
+    font-family: 'Courier New', monospace;
+    background: #2d5016;
+    color: #fff;
+    overflow: hidden;
+    height: 100vh;
+    position: relative;
+}
+
+.screen {
+    display: none;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+}
+
+.screen.active {
+    display: flex;
+}
+
+/* Menu Screen */
+.menu-container {
+    background: #4e9f3d;
+    border: 3px solid #2d5016;
+    padding: 30px;
+    max-width: 420px;
+    width: 90%;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+}
+
+/* Custom scrollbar for menu container */
+.menu-container::-webkit-scrollbar {
+    width: 12px;
+}
+
+.menu-container::-webkit-scrollbar-track {
+    background: #2d5016;
+    border: 2px solid #1a1a1a;
+}
+
+.menu-container::-webkit-scrollbar-thumb {
+    background: #8bc34a;
+    border: 2px solid #2d5016;
+}
+
+.menu-container::-webkit-scrollbar-thumb:hover {
+    background: #9fd956;
+}
+
+/* Firefox scrollbar for menu */
+@supports (scrollbar-width: thick) {
+    .menu-container {
+        scrollbar-width: thick;
+        scrollbar-color: #8bc34a #2d5016;
+    }
+}
+
+.game-title {
+    font-size: 2.2rem;
+    text-align: center;
+    margin-bottom: 10px;
+    color: #FFD700;
+    letter-spacing: 2px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.game-subtitle {
+    text-align: center;
+    font-size: 0.9rem;
+    margin-bottom: 24px;
+    color: #E8F5E9;
+    letter-spacing: 1px;
+}
+
+.menu-content input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 12px;
+    border: 3px solid #2d5016;
+    background: #E8F5E9;
+    color: #1a1a1a;
+    font-family: 'Courier New', monospace;
+    font-size: 0.95rem;
+    font-weight: bold;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.menu-content input:focus {
+    outline: none;
+    border-color: #FFD700;
+    background: #fff;
+}
+
+.menu-content input::placeholder {
+    color: #666;
+    text-transform: none;
+    letter-spacing: 1px;
+}
+
+.primary-btn {
+    width: 100%;
+    padding: 12px;
+    font-size: 1rem;
+    font-weight: bold;
+    background: #FFD700;
+    color: #1a1a1a;
+    border: 3px solid #2d5016;
+    cursor: pointer;
+    margin-bottom: 10px;
+    font-family: 'Courier New', monospace;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    transition: background 0.2s, transform 0.1s;
+}
+
+.primary-btn:hover {
+    background: #FFE44D;
+    transform: translateY(-2px);
+}
+
+.primary-btn:active {
+    background: #FFC700;
+    transform: translateY(0);
+}
+
+.secondary-btn {
+    width: 100%;
+    padding: 12px;
+    font-size: 0.95rem;
+    font-weight: bold;
+    background: #8bc34a;
+    color: #1a1a1a;
+    border: 3px solid #2d5016;
+    cursor: pointer;
+    font-family: 'Courier New', monospace;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    transition: background 0.2s, transform 0.1s;
+}
+
+.secondary-btn:hover {
+    background: #9fd956;
+    transform: translateY(-2px);
+}
+
+.secondary-btn:active {
+    background: #7cb342;
+    transform: translateY(0);
+}
+
+/* Modal */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    justify-content: center;
+    align-items: center;
+}
+
+.modal.show {
+    display: flex;
+}
+
+.modal-content {
+    background: #4e9f3d;
+    border: 3px solid #2d5016;
+    padding: 30px;
+    max-width: 500px;
+    width: 90%;
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+/* Custom scrollbar for modal */
+.modal-content::-webkit-scrollbar {
+    width: 12px;
+}
+
+.modal-content::-webkit-scrollbar-track {
+    background: #2d5016;
+    border: 2px solid #1a1a1a;
+}
+
+.modal-content::-webkit-scrollbar-thumb {
+    background: #8bc34a;
+    border: 2px solid #2d5016;
+}
+
+.modal-content::-webkit-scrollbar-thumb:hover {
+    background: #9fd956;
+}
+
+/* Firefox scrollbar for modal */
+@supports (scrollbar-width: thick) {
+    .modal-content {
+        scrollbar-width: thick;
+        scrollbar-color: #8bc34a #2d5016;
+    }
+}
+
+.modal-content h2 {
+    font-size: 1.8rem;
+    color: #FFD700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.modal-content ul {
+    list-style: none;
+    margin-bottom: 20px;
+}
+
+.modal-content li {
+    padding: 10px 0;
+    font-size: 0.95rem;
+    line-height: 1.8;
+    border-bottom: 2px solid #2d5016;
+    color: #E8F5E9;
+}
+
+.modal-content li:last-child {
+    border-bottom: none;
+}
+
+/* Lobby Screen */
+.lobby-container {
+    background: #2a2a2a;
+    border: 2px solid #fff;
+    padding: 30px;
+    max-width: 480px;
+    width: 90%;
+    text-align: center;
+}
+
+.lobby-container h2 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    letter-spacing: 2px;
+}
+
+.room-info {
+    font-size: 1.1rem;
+    margin-bottom: 30px;
+    padding: 15px;
+    background: #1a1a1a;
+    border: 2px solid #fff;
+}
+
+.player-list {
+    margin: 30px 0;
+    min-height: 100px;
+}
+
+.player-item {
+    padding: 15px;
+    margin: 10px 0;
+    background: #1a1a1a;
+    border: 2px solid #fff;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.player-color {
+    width: 30px;
+    height: 30px;
+    border: 2px solid #fff;
+}
+
+.player-name {
+    font-size: 1.1rem;
+    font-weight: bold;
+}
+
+/* Game Screen */
+#game-screen {
+    flex-direction: column;
+}
+
+.restart-btn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    padding: 12px 24px;
+    font-size: 1rem;
+    font-weight: bold;
+    background: #4e9f3d;
+    color: #fff;
+    border: 3px solid #2d5016;
+    cursor: pointer;
+    font-family: 'Courier New', monospace;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    z-index: 100;
+    transition: background 0.2s, transform 0.1s;
+}
+
+.restart-btn:hover {
+    background: #5db049;
+    transform: translateY(-2px);
+}
+
+.restart-btn:active {
+    background: #3d7d2e;
+    transform: translateY(0);
+}
+
+.restart-btn.hidden {
+    display: none;
+}
+
+/* Game Over Card */
+.game-over-card {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #4e9f3d;
+    border: 4px solid #2d5016;
+    padding: 40px;
+    min-width: 320px;
+    text-align: center;
+    display: none;
+    z-index: 200;
+}
+
+.game-over-card.show {
+    display: block;
+}
+
+.game-over-title {
+    font-size: 2.2rem;
+    margin-bottom: 30px;
+    letter-spacing: 4px;
+    font-weight: bold;
+    color: #FFD700;
+    text-transform: uppercase;
+}
+
+.score-display {
+    margin: 30px 0;
+}
+
+.score-item {
+    margin: 20px 0;
+    padding: 18px;
+    background: #2d5016;
+    border: 3px solid #1a1a1a;
+}
+
+.score-label {
+    display: block;
+    font-size: 0.9rem;
+    color: #E8F5E9;
+    margin-bottom: 12px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.score-value {
+    display: block;
+    font-size: 2.8rem;
+    font-weight: bold;
+    color: #FFD700;
+    letter-spacing: 3px;
+}
+
+.minimal-btn {
+    width: 100%;
+    padding: 16px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    background: #FFD700;
+    color: #1a1a1a;
+    border: 3px solid #2d5016;
+    cursor: pointer;
+    font-family: 'Courier New', monospace;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-top: 25px;
+    transition: background 0.2s, transform 0.1s;
+}
+
+.minimal-btn:hover {
+    background: #FFE44D;
+    transform: translateY(-2px);
+}
+
+.minimal-btn:active {
+    background: #FFC700;
+    transform: translateY(0);
+}
+
+#game-hud {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    right: 20px;
+    display: flex;
+    justify-content: space-between;
+    z-index: 10;
+}
+
+.hud-item {
+    background: #4e9f3d;
+    border: 3px solid #2d5016;
+    padding: 12px 22px;
+    font-size: 1rem;
+    font-weight: bold;
+    font-family: 'Courier New', monospace;
+    letter-spacing: 2px;
+    color: #fff;
+}
+
+#game-canvas {
+    background: #87CEEB;
+}
+
+.game-message {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #4e9f3d;
+    border: 4px solid #2d5016;
+    padding: 30px 60px;
+    font-size: 1.5rem;
+    font-weight: bold;
+    display: none;
+    font-family: 'Courier New', monospace;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #FFD700;
+    z-index: 150;
+}
+
+.game-message.show {
+    display: block;
+}
+
+/* Divider */
+.divider {
+    margin: 16px 0;
+    text-align: center;
+    position: relative;
+}
+
+.divider::before,
+.divider::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    width: 40%;
+    height: 3px;
+    background: #2d5016;
+}
+
+.divider::before {
+    left: 0;
+}
+
+.divider::after {
+    right: 0;
+}
+
+.divider span {
+    padding: 0 15px;
+    color: #2d5016;
+    font-size: 0.85rem;
+    background: #4e9f3d;
+    position: relative;
+    z-index: 1;
+    font-weight: bold;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+/* Waiting/Character Selection Screen */
+.waiting-container {
+    background: #4e9f3d;
+    border: 3px solid #2d5016;
+    padding: 28px;
+    max-width: 480px;
+    width: 90%;
+    max-height: 90vh;
+    overflow-y: auto;
+    text-align: center;
+}
+
+/* Custom scrollbar for waiting container */
+.waiting-container::-webkit-scrollbar {
+    width: 12px;
+}
+
+.waiting-container::-webkit-scrollbar-track {
+    background: #2d5016;
+    border: 2px solid #1a1a1a;
+}
+
+.waiting-container::-webkit-scrollbar-thumb {
+    background: #8bc34a;
+    border: 2px solid #2d5016;
+}
+
+.waiting-container::-webkit-scrollbar-thumb:hover {
+    background: #9fd956;
+}
+
+/* Firefox scrollbar for waiting container */
+@supports (scrollbar-width: thick) {
+    .waiting-container {
+        scrollbar-width: thick;
+        scrollbar-color: #8bc34a #2d5016;
+    }
+}
+
+.waiting-container h2 {
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+    color: #FFD700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+.room-info-display {
+    margin: 18px 0;
+    padding: 18px;
+    background: #2d5016;
+    border: 3px solid #1a1a1a;
+}
+
+.room-info-display .label {
+    display: block;
+    font-size: 0.85rem;
+    color: #E8F5E9;
+    margin-bottom: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.room-info-display .code {
+    font-size: 2rem;
+    font-weight: bold;
+    letter-spacing: 5px;
+    color: #FFD700;
+    display: block;
+    margin: 12px 0;
+    text-transform: uppercase;
+}
+
+.room-actions {
+    display: flex;
+    gap: 10px;
+    margin: 12px 0;
+    justify-content: center;
+}
+
+.room-link-input {
+    width: 100%;
+    padding: 10px;
+    margin-top: 12px;
+    border: 3px solid #1a1a1a;
+    background: #E8F5E9;
+    color: #1a1a1a;
+    font-size: 0.8rem;
+    text-align: center;
+    font-family: 'Courier New', monospace;
+    font-weight: bold;
+    display: none;
+}
+
+.room-link-input.show {
+    display: block;
+}
+
+.copy-btn {
+    padding: 8px 16px;
+    background: #8bc34a;
+    color: #1a1a1a;
+    border: 3px solid #2d5016;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 0.85rem;
+    font-family: 'Courier New', monospace;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    transition: background 0.2s, transform 0.1s;
+    flex: 1;
+}
+
+.copy-btn:hover {
+    background: #9fd956;
+    transform: translateY(-2px);
+}
+
+.copy-btn:active {
+    background: #7cb342;
+    transform: translateY(0);
+}
+
+.character-selection {
+    margin: 22px 0;
+}
+
+.character-selection h3 {
+    font-size: 1rem;
+    color: #FFD700;
+    margin-bottom: 15px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+.character-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    margin: 15px 0;
+}
+
+.character-option {
+    padding: 20px 15px;
+    background: #2d5016;
+    border: 3px solid #1a1a1a;
+    cursor: pointer;
+    transition: all 0.2s, transform 0.1s;
+}
+
+.character-option:hover {
+    background: #3d6026;
+    transform: translateY(-3px);
+    border-color: #FFD700;
+}
+
+.character-option.selected {
+    background: #FFD700;
+    color: #1a1a1a;
+    border-color: #2d5016;
+}
+
+.character-preview {
+    font-size: 3rem;
+    margin-bottom: 8px;
+}
+
+.character-option span {
+    display: block;
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: inherit;
+}
+
+.waiting-player-list {
+    margin: 18px 0;
+}
+
+.waiting-player-item {
+    padding: 15px;
+    margin: 12px 0;
+    background: #2d5016;
+    border: 3px solid #1a1a1a;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.waiting-player-item .player-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.waiting-player-item .character-icon {
+    font-size: 2.8rem;
+}
+
+.waiting-player-item .player-status {
+    text-align: left;
+}
+
+.waiting-player-item .player-role {
+    font-size: 0.85rem;
+    color: #FFD700;
+    font-weight: bold;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.waiting-player-item .character-name {
+    font-size: 1.2rem;
+    color: #E8F5E9;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+#players-waiting h3 {
+    font-size: 1rem;
+    color: #FFD700;
+    margin-bottom: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+.waiting-message {
+    margin: 15px 0;
+    color: #E8F5E9;
+    font-size: 0.85rem;
+    font-style: italic;
+}
+
+.primary-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.primary-btn:disabled:hover {
+    background: #fff;
+    color: #1a1a1a;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .game-title {
+        font-size: 1.8rem;
+    }
+    
+    .menu-container, .lobby-container, .waiting-container {
+        padding: 15px;
+        max-width: 95%;
+    }
+    
+    .character-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .instructions {
+        padding: 12px;
+    }
+    
+    .game-subtitle {
+        font-size: 1rem;
+    }
+}
